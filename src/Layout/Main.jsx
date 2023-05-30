@@ -1,14 +1,21 @@
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../Pages/Shared/Footer/Footer';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const Main = () => {
+    //track path location.ami kon route a jacchi sei route er path name diye dibe.
+    const location = useLocation();
+
+    //jodi login path a dhuki tobe 'true' hobe.eikhene check kore dekha hocche je location er path "login" kina.echara 'false' hobe.
+    const noHeaderFooter =location.pathname.includes('login')
+    console.log(noHeaderFooter)
     return (
-        <div>
-            <Navbar></Navbar>
+        //(noHeaderFooter er value jodi false hoy tobe <Navbar>,<Footer> dekhabe)
+        <div>     
+            {noHeaderFooter || <Navbar></Navbar>}
             <Outlet></Outlet>
-            <Footer></Footer>
+            {noHeaderFooter ||<Footer></Footer>}
         </div>
     );
 };
