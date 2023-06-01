@@ -10,7 +10,7 @@ const Main = () => {
 
     //jodi login path a dhuki tobe 'true' hobe.eikhene check kore dekha hocche je location er path "login" kina.echara 'false' hobe.
     const noHeaderFooter =location.pathname.includes('login') || location.pathname.includes('signUp')
-    console.log(noHeaderFooter)
+    // console.log(noHeaderFooter)
     return (
         //(noHeaderFooter er value jodi false hoy tobe <Navbar>,<Footer> dekhabe)
         <div>     
