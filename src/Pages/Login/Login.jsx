@@ -1,30 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../Provider/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-    const [disable,setDisable]=useState(true);
+    const [disable, setDisable] = useState(true);
     //useRef diye input field er value read kora holo.jei input field er value read korte chai sheikhane ref={captchaRef} add korte hobe.
-    const captchaRef=useRef(null)
-    const handleValidateCaptcha=()=>{
-        const value=captchaRef.current.value;
-        if(validateCaptcha(value)){
+    const captchaRef = useRef(null)
+    const { signIn } = useContext(AuthContext)
+
+    const handleValidateCaptcha = () => {
+        const value = captchaRef.current.value;
+        if (validateCaptcha(value)) {
             setDisable(false)
         }
-        else{
+        else {
             setDisable(true)
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         loadCaptchaEnginge(6);
-    },[])
+    }, [])
 
-    const handeLogin=event=>{
+    const handeLogin = event => {
         event.preventDefault();
-        const form=event.target;
-        const email=form.email.value;
-        const password=form.password.value;
-        console.log(email,password)
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password)
+
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch((error)=>{
+                const errorMessage=error.message;
+                console.log(errorMessage)
+            })
+
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -49,16 +64,17 @@ const Login = () => {
                         </div>
                         <div className="form-control">
                             <label className="label">
-                            <LoadCanvasTemplate />
+                                <LoadCanvasTemplate />
                             </label>
                             <input type="text" ref={captchaRef} name="captcha" placeholder="type the text aboves" className="input input-bordered" />
                             <button onClick={handleValidateCaptcha} className='btn btn-outline btn-xs'>Validate</button>
                         </div>
                         <div className="form-control mt-6">
-                            
+
                             <input disabled={disable} className="btn btn-primary" type="submit" value="Login" />
                         </div>
                     </form>
+                    <p>New Here? <small><Link to='/signUp'>Create an account</Link></small></p>
                 </div>
             </div>
         </div>

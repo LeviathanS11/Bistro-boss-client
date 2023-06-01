@@ -6,9 +6,10 @@ import Navbar from '../Pages/Shared/Navbar/Navbar';
 const Main = () => {
     //track path location.ami kon route a jacchi sei route er path name diye dibe.
     const location = useLocation();
+    // console.log(location)
 
     //jodi login path a dhuki tobe 'true' hobe.eikhene check kore dekha hocche je location er path "login" kina.echara 'false' hobe.
-    const noHeaderFooter =location.pathname.includes('login')
+    const noHeaderFooter =location.pathname.includes('login') || location.pathname.includes('signUp')
     console.log(noHeaderFooter)
     return (
         //(noHeaderFooter er value jodi false hoy tobe <Navbar>,<Footer> dekhabe)
